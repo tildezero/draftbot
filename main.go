@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
 	"log/slog"
 	"os"
 	"os/signal"
@@ -15,7 +14,7 @@ import (
 
 	// "github.com/disgoorg/paginator"
 	"github.com/disgoorg/snowflake/v2"
-	"github.com/joho/godotenv"
+	_ "github.com/disgoorg/snowflake/v2"
 	"github.com/tildezero/draftbot/bot"
 	"github.com/tildezero/draftbot/commands"
 )
@@ -23,11 +22,6 @@ import (
 func main() {
 
 	sync := flag.String("sync", "test", "whether to sync commands or not. debug for the guild in DEBUG_GUILD_ID, global for all guilds, anything else for no sync")
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("couldn't load env")
-	}
 
 	// set up handler for commands
 	h := handler.New()
