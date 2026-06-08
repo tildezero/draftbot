@@ -14,7 +14,7 @@ import (
 
 	// "github.com/disgoorg/paginator"
 	"github.com/disgoorg/snowflake/v2"
-	_ "github.com/disgoorg/snowflake/v2"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/tildezero/draftbot/bot"
 	"github.com/tildezero/draftbot/commands"
 )
@@ -37,8 +37,7 @@ func main() {
 
 	bot.Client.AddEventListeners(h)
 
-	var guildIDs []snowflake.ID
-	var shouldSync bool
+	// var guildIDs []snowflake.ID
 
 	switch *sync {
 	case "debug":
@@ -46,20 +45,14 @@ func main() {
 		if guildID == "" {
 			panic("TEST_GUILD_ID needs to be set")
 		}
-		guildIDs = []snowflake.ID{snowflake.MustParse(guildID)}
-		shouldSync = true
+		if err = handler.SyncCommands(bot.Client, commands.Commands, []snowflake.ID{snowflake.MustParse(guildID)}); err != nil {
+			slog.Error("couldn't sync commands to debug", slog.Any("err", err))
+		}
 
 	case "global":
-		guildIDs = []snowflake.ID{}
-		shouldSync = true
-	}
-
-	if shouldSync {
-		if err := handler.SyncCommands(bot.Client, commands.Commands, guildIDs); err != nil {
-			slog.Error("couldn't sync commands",
-				slog.String("mode", *sync),
-				slog.Any("err", err),
-			)
+		_, err := bot.Client.Rest.SetGlobalCommands(bot.Client.ApplicationID, commands.Commands)
+		if err != nil {
+			slog.Error("couldn't sync global commands", slog.Any("err", err))
 		}
 	}
 
