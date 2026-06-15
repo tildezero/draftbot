@@ -13,12 +13,14 @@ import (
 	"github.com/disgoorg/disgo/events"
 	"github.com/disgoorg/disgo/gateway"
 	"github.com/disgoorg/disgo/handler"
+	"github.com/disgoorg/paginator"
 	"github.com/tildezero/draftbot/pkg/draftout"
 )
 
 type Draftbot struct {
-	Client   *bot.Client
-	Draftout *draftout.Client
+	Client    *bot.Client
+	Draftout  *draftout.Client
+	Paginator *paginator.Manager
 }
 
 func New() (*Draftbot, error) {
@@ -53,8 +55,9 @@ func New() (*Draftbot, error) {
 	}
 
 	draft := draftout.New()
+	p := paginator.New()
 
-	return &Draftbot{Client: cord, Draftout: draft}, nil
+	return &Draftbot{Client: cord, Draftout: draft, Paginator: p}, nil
 }
 
 type CmdFunction func(e *handler.CommandEvent, b *Draftbot) error

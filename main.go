@@ -12,7 +12,6 @@ import (
 	"github.com/disgoorg/disgo/handler"
 	"github.com/disgoorg/disgo/handler/middleware"
 
-	// "github.com/disgoorg/paginator"
 	"github.com/disgoorg/snowflake/v2"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/tildezero/draftbot/bot"
@@ -36,8 +35,6 @@ func main() {
 	commands.RegisterCommands(h, bot)
 
 	bot.Client.AddEventListeners(h)
-
-	// var guildIDs []snowflake.ID
 
 	switch *sync {
 	case "debug":
