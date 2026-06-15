@@ -1,6 +1,8 @@
 services:
   bot:
-    image: ghcr.io/tildezero/draftbot:main
+    build: 
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     env_file:
       - draftbot.env
