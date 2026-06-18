@@ -21,6 +21,7 @@ import (
 func main() {
 
 	sync := flag.String("sync", "test", "whether to sync commands or not. debug for the guild in DEBUG_GUILD_ID, global for all guilds, anything else for no sync")
+	flag.Parse()
 
 	// set up handler for commands
 	h := handler.New()
@@ -47,9 +48,16 @@ func main() {
 		}
 
 	case "global":
+		slog.Info("syncing commands")
 		_, err := bot.Client.Rest.SetGlobalCommands(bot.Client.ApplicationID, commands.Commands)
 		if err != nil {
 			slog.Error("couldn't sync global commands", slog.Any("err", err))
+		}
+		slog.Info("synced commands globally")
+		cmds, err := bot.Client.Rest.GetGlobalCommands(bot.Client.ApplicationID, false)
+		slog.Info("commands:")
+		for _, cmd := range cmds {
+			slog.Info(cmd.Name())
 		}
 	}
 

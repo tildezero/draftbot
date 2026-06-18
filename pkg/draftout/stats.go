@@ -2,7 +2,7 @@ package draftout
 
 import (
 	"context"
-	"errors"
+	"fmt"
 	"net/url"
 	"strconv"
 )
@@ -11,24 +11,35 @@ func (c *Client) GetPlayerStats(ctx context.Context, username string, page int, 
 	if page < 1 {
 		page = 1
 	}
-	var resu PlayerStats
+	var result PlayerStats
 	vals := url.Values{}
 	vals.Add("page", strconv.Itoa(page))
 	vals.Add("filter", string(filter))
 
-	err := c.get(ctx, "/api/stats/"+username, vals, &resu)
+	err := c.get(ctx, "/api/stats/"+username, vals, &result)
 	if err != nil {
 		return nil, err
 	}
-	return &resu, nil
+	return &result, nil
 }
 
-func (c *Client) GetPlayerMatch(ctx context.Context, username string, matchId int) (any, error) {
-	// TODO
-	return nil, errors.New("not implemented yet")
+func (c *Client) GetPlayerMatch(ctx context.Context, username string, matchId int) (*MatchDetail, error) {
+	var result MatchDetail
+
+	err := c.get(ctx, fmt.Sprintf("/api/stats/%s/%d", username, matchId), nil, &result)
+	if err != nil {
+		return nil, err
+	}
+	return &result, nil
 }
 
 func (c *Client) GetPlayerEloSeries(ctx context.Context, username string) (any, error) {
-	// TODO
-	return nil, errors.New("not implemented yet")
+	var result EloSeries
+
+	err := c.get(ctx, fmt.Sprintf("/api/stats/%s/elo-series", username), nil, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, nil
 }

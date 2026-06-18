@@ -130,3 +130,24 @@ type Rank struct {
 	Max   *int   `json:"max"`
 	Color string `json:"color"`
 }
+
+// EloSeries (/api/stats/{username}/elo-series)
+type EloSeries struct {
+	StartElo int        `json:"startElo"`
+	Points   []EloPoint `json:"points"`
+}
+
+type EloPoint struct {
+	MatchID       int          `json:"matchId"`
+	CompletedAt   int64        `json:"completedAt"`
+	EloBefore     int          `json:"eloBefore"`
+	EloAfter      int          `json:"eloAfter"`
+	EloChange     int          `json:"eloChange"`
+	Outcome       MatchOutcome `json:"outcome"`
+	Won           bool         `json:"won"`
+	OpponentUUID  string       `json:"opponentUuid"`
+	OpponentName  string       `json:"opponentName"`
+	PlayerScore   int          `json:"playerScore"`
+	OpponentScore int          `json:"opponentScore"`
+	DurationMs    int          `json:"durationMs"`
+}

@@ -18,6 +18,7 @@ require (
 	github.com/sasha-s/go-csync v0.0.0-20240107134140-fcbab37b09ad // indirect
 	golang.org/x/crypto v0.52.0 // indirect
 	golang.org/x/sys v0.45.0 // indirect
+	golang.org/x/text v0.38.0 // indirect
 )
 
 replace github.com/disgoorg/paginator => github.com/tildezero/paginator v0.0.0-20260610013426-d03ca799b69d

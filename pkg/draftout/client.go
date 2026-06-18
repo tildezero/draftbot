@@ -32,6 +32,7 @@ func (c *Client) get(ctx context.Context, path string, params url.Values, target
 		u.RawQuery = params.Encode()
 	}
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, u.String(), nil)
+	req.Header.Set("Accept", "application/json")
 	if err != nil {
 		return err
 	}

@@ -29,6 +29,7 @@ func New() (*Draftbot, error) {
 		slog.Error("no token set!")
 		return nil, errors.New("no token set")
 	}
+	p := paginator.New()
 	cord, err := disgo.New(os.Getenv("DISCORD_TOKEN"),
 		// set gateway options
 		bot.WithGatewayConfigOpts(
@@ -39,7 +40,7 @@ func New() (*Draftbot, error) {
 				gateway.IntentDirectMessages,
 			),
 		),
-		// bot.WithEventListeners(paginator),
+		bot.WithEventListeners(p),
 		bot.WithEventListenerFunc(func(e *events.Ready) {
 			slog.Info("the bot is ready!")
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -55,7 +56,6 @@ func New() (*Draftbot, error) {
 	}
 
 	draft := draftout.New()
-	p := paginator.New()
 
 	return &Draftbot{Client: cord, Draftout: draft, Paginator: p}, nil
 }

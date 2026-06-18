@@ -17,3 +17,7 @@ it's a bot for [draftout](https://draftoutmc.com) stats!
 - `cp draftbot.env.example .env` and fill in
 - `go mod download`
 - `go run .`
+
+## acknowledgements/libraries used
+- [draftout-api-spec](https://github.com/memerson12/draftout-api-spec) by memerson12 carried this project's functionality
+- [disgo](https://github.com/disgoorg)
