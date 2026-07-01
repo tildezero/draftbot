@@ -33,7 +33,7 @@ func (c *Client) GetPlayerMatch(ctx context.Context, username string, matchId in
 	return &result, nil
 }
 
-func (c *Client) GetPlayerEloSeries(ctx context.Context, username string) (any, error) {
+func (c *Client) GetPlayerEloSeries(ctx context.Context, username string) (*EloSeries, error) {
 	var result EloSeries
 
 	err := c.get(ctx, fmt.Sprintf("/api/stats/%s/elo-series", username), nil, &result)

@@ -11,5 +11,6 @@ RUN --mount=target=. \
     CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /out/draftbot .
 
 FROM scratch
+COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=build /out/draftbot /bin/draftbot
 ENTRYPOINT [ "/bin/draftbot" ]
