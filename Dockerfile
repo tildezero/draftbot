@@ -11,5 +11,5 @@ RUN --mount=target=. \
     CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /out/draftbot .
 
 FROM scratch
-COPY --from=build /out/draftbot /bin
+COPY --from=build /out/draftbot /bin/draftbot
 ENTRYPOINT [ "/bin/draftbot" ]
