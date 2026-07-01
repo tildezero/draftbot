@@ -181,7 +181,7 @@ func matchHistoryText(matches []draftout.MatchSummary, player *draftout.Player, 
 		}
 		// 															  ID       TIME   DUR       OPP  RES  SCORE
 		fmt.Fprintf(&matchHistoryText, "`%d` - <t:%d:R> (%s) - vs. %s - **%s (%d-%d)**", match.ID, match.CompletedAt/1000, draftout.FormatDuration(match.DurationMs), strings.ReplaceAll(other.Username, "_", "\\_"), result, self.Score, other.Score)
-		if filter == draftout.FilterCompetitive && self.EloChange > 0 {
+		if filter == draftout.FilterCompetitive && self.EloChange != 0 {
 			sign := "+"
 			if self.EloChange < 0 {
 				sign = "-"
